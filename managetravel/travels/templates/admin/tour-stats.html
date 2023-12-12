@@ -1,0 +1,77 @@
+{% extends 'admin/base_site.html' %}
+{% block content %}
+<h1 class="text-center text-danger">THONG KE DOANH THU </h1>
+<form method="post"  >
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="button">Submit</button>
+</form>
+{% for year in yearly_revenue%}
+    <h1>{{year}}</h1>
+{% endfor %}
+
+{% for month in month_revenue %}
+    <h1>{{month}}</h1>
+{% endfor %}
+<div class="row-form-errors">
+    <div class="col-md-5 col-xs-12">
+        <table class="table">
+            <tr>
+                <th>Ten Tour</th>
+                <th>Doanh thu</th>
+            </tr>
+            {% for year in yearly_revenue%}
+            <tr>
+                <td>{{year.name_tour}}</td>
+                <td>{{year.total_revenue}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+     <div class="col-md-5 col-xs-12" >
+         <canvas id="myChart" width="-0.5" height="0.5"></canvas>
+     </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+             let labels = [], counter=[],colors=[], borderColors=[]
+             let r,g,b
+              {% for year in yearly_revenue%}
+                labels.push(`{{year.name_tour}}`)
+              counter.push({{year.total_revenue}})
+              r = parseInt(Math.random()*255)
+              g = parseInt(Math.random()*255)
+              b = parseInt(Math.random()*255)
+             colors.push(`rgba(${r}, ${g}, ${b}, 0.2)`)
+             borderColors.push(`rgba(${r}, ${g}, ${b}, 1)`)
+              {% endfor %}
+
+              window.onload = function () {
+                const ctx= document.getElementById('myChart').getContext('2d')
+                const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: '# of Votes',
+                    data: counter,
+                    backgroundcolor: colors,
+                    borderColors: borderColors,
+                    borderWidth: 0.5
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+              }
+        </script>
+
+{% endblock %}
