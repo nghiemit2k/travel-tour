@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-1zb%x7x4ysjp$fi6wlfbz4pgap_cfn+*u-9_^h)3oes_$@omuh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','license.piriform.com']
 
 
 # Application definition
@@ -81,7 +81,7 @@ CKEDITOR_UPLOAD_PATH ='tours/'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
     'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 20,
     'DEFAULT_AUTHENTICATION_CLASSES': [
     # 'rest_framework.authentication.BasicAuthentication',
     # 'rest_framework.authentication.TokenAuthentication'

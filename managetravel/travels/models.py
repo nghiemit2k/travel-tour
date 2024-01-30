@@ -49,27 +49,23 @@ class Booking(models.Model):
 class News(models.Model):
     name = models.CharField(max_length=10, unique= True)
     content = RichTextField()
-    staff = models.ForeignKey(Staff,on_delete=models.SET_NULL,null=True)
+    staff = models.ForeignKey(Staff,on_delete=models.CASCADE,null=False)
     create_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     def __str__(self):
         return self.name
-class Comment(models.Model):
+class Interaction(models.Model):
     content = RichTextField()
-    customer_id = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    news_id = models.ForeignKey(News, on_delete=models.SET_NULL, null=True)
-    tour_id = models.ForeignKey(Tours, on_delete=models.SET_NULL, null=True)
+    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
+    news_id = models.ForeignKey(News, on_delete=models.CASCADE, null=False)
+    tour_id = models.ForeignKey(Tours, on_delete=models.CASCADE, null=False)
     create_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
-    def __str__(self):
-        return self.content
-class Review(models.Model):
+
+    class Meta:
+        abstract = True
+class Comment(Interaction):
+    content = RichTextField()
+class Review(Interaction):
     content = RichTextField()
     rating = models.PositiveIntegerField()
-    tour_id =models.ForeignKey(Tours,on_delete=models.SET_NULL,null=True)
-    newid = models.ForeignKey(News,on_delete=models.SET_NULL,null=True)
-    customer_id = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    create_date = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)
-    def __str__(self):
-        return self.content
