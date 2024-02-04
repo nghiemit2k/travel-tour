@@ -5,8 +5,11 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="str.contains" />
+<<<<<<< HEAD
           <option value="managetravel.travels.admin.*" />
           <option value="django.db.models.fields.PositiveIntegerField.__mul__" />
+=======
+>>>>>>> 486f3e66d07df9d18d8e40cf61be6313948c143f
         </list>
       </option>
     </inspection_tool>
