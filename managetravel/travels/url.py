@@ -13,7 +13,7 @@ router.register('booking',views.BookingViewSet)
 router.register('news',views.NewsViewSet)
 router.register('users',views.UserViewSet,basename='users')
 router.register('comment',views.CommentViewSet)
-router.register('review',views.ReviewSet)
+router.register('Rating',views.RatingViewSet)
 
 urlpatterns = [
 

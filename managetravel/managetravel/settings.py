@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 INTERNAL_IPS = [
@@ -91,7 +92,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
          'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'travels',
+        'NAME': 'travel',
         'USER':'root',
         'PASSWORD':'123456'
     }

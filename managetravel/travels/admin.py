@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Staff, News, Tours, Booking,User
+from .models import News, Tours, Booking,User
 from django.utils.html import mark_safe
 from django import forms
 from django.urls import path
@@ -8,6 +8,8 @@ from django.template.response import TemplateResponse
 from django.db.models import Count, Sum,F,DecimalField
 from django.forms import DateInput
 from django.db.models.functions import ExtractYear,ExtractMonth
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 class AdminSite(admin.AdminSite):
     site_header = "abcc"
 
@@ -68,7 +70,7 @@ class DateForm(forms.Form):
     from_date = forms.DateField
     to_date = forms.DateField
 class ToursAdmin(admin.ModelAdmin):
-    list_display = ["id", "name_tour", "create_date", "staff"]
+    list_display = ["id", "name_tour", "create_date"]
     search_fields = ["name_tour", "create_date"]
     readonly_fields = ['avatar']
 
@@ -78,7 +80,7 @@ class ToursAdmin(admin.ModelAdmin):
 
 
 class UserInline(admin.StackedInline):
-    model = Staff
+    model = User
     pk_name = 'user'
 
 
@@ -98,12 +100,19 @@ class NewsForm(forms.ModelForm):
 class UserAdmin(admin.ModelAdmin):
     list_display = ["username","email","password"]
     search_fields = ["username", "create_date"]
+
+    def save_model(self, request, obj, form, change):
+        # Nếu là việc tạo mới user hoặc mật khẩu được thay đổi, hãy băm mật khẩu
+        if not change or form.cleaned_data["password"]:
+            obj.set_password(form.cleaned_data["password"])
+        super().save_model(request, obj, form, change)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ["id", "name","staff", "content", "create_date"]
+    list_display = ["id", "name", "content", "create_date"]
     search_fields = ["name","content","create_date"]
     form = NewsForm
-
+# admin.site.unregister(User)
 admin_site.register(User,UserAdmin)
-admin_site.register(Staff,StaffAdmin)
+
+# admin_site.register(Staff,StaffAdmin)
 admin_site.register(News, NewsAdmin)
 admin_site.register(Tours, ToursAdmin)

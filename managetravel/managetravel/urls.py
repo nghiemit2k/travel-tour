@@ -10,7 +10,7 @@ schema_view = get_schema_view(
     title="Travel API",
     default_version='v1',
     description="APIs for CourseApp",
-    contact=openapi.Contact(email="nghiemit999@gmail.com"),
+    contact=openapi.Contact(email="thanh.dh@ou.edu.vn"),
     license=openapi.License(name="Nghiem Khai"),
     ),
     public=True,
