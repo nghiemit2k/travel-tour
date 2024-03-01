@@ -3,6 +3,8 @@ from rest_framework import serializers
 from  .models import Tours,Booking,News,User,Rating,Comment,Like
 
 class ToursSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField()
+
     image = serializers.SerializerMethodField(source='image')
 
     def get_image(self,tours):
@@ -11,9 +13,12 @@ class ToursSerializer(serializers.ModelSerializer):
             if request:
                 return request.build_absolute_uri('/static/%s' % tours.image.name)
             return '/static/%s' % tours.image.name
+
+    def get_id(self, obj):
+        return obj.pk
     class Meta:
         model = Tours
-        fields =["name_tour","image","price_adult","price_child","create_date","start_date","end_date"]
+        fields =["id","name_tour","image","price_adult","price_child","create_date","start_date","end_date"]
 
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,6 +48,7 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields =['user','news','create_date']
 class UserSerializer(serializers.ModelSerializer):
+    # avatar = serializers.SerializerMethodField()
     class Meta:
         model = User
         fields=['id','first_name','last_name','email','username','password','avatar']
@@ -56,7 +62,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-
 
 # class CustomerSerializer(serializers.ModelSerializer):
 #     user = UserSerializer()

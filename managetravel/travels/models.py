@@ -59,7 +59,7 @@ class Comment(Interaction):
     news = models.ForeignKey(News, on_delete=models.CASCADE, null=True)
     comments = models.ForeignKey('self',on_delete=models.CASCADE, null=True)
     content = RichTextField()
-
+    create_date = models.DateTimeField(auto_now_add=True)
 class Rating(Interaction):
     tour = models.ForeignKey(Tours, on_delete=models.CASCADE, null=False)
     rating = models.SmallIntegerField(default=0)

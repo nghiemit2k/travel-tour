@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-1zb%x7x4ysjp$fi6wlfbz4pgap_cfn+*u-9_^h)3oes_$@omuh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','license.piriform.com']
+ALLOWED_HOSTS = ['127.0.0.1','license.piriform.com','192.168.1.12','192.168.1.4','NghiemKhai']
 
 
 # Application definition
@@ -36,13 +36,14 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'drf_yasg',
     'debug_toolbar',
-
+    'corsheaders',
 ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -51,10 +52,25 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
 
 INTERNAL_IPS = [
 '127.0.0.1'
 ]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # Thay thế bằng origin của ứng dụng React Native của bạn
+#     # Các origins khác nếu cần
+# ]
+
 ROOT_URLCONF = 'managetravel.urls'
 
 TEMPLATES = [

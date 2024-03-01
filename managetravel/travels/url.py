@@ -8,7 +8,8 @@ from django.contrib import admin
 from django.urls import path,include,re_path
 router = DefaultRouter()
 router.register('tours',views.TourViewSet)
-router.register('tours',views.TourDetailViewSet)
+router.register('tours',views.TourDetailViewSet, basename='tourss')
+router.register('tours',views.TourCommentViewSet)
 router.register('booking',views.BookingViewSet)
 router.register('news',views.NewsViewSet)
 router.register('users',views.UserViewSet,basename='users')

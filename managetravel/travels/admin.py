@@ -44,10 +44,9 @@ class AdminSite(admin.AdminSite):
                 end_date = form.cleaned_data['end_date']
                 # Perform operations based on form data
                 yearly_revenue = Tours.objects.filter(booking__active=True,booking__create_date__range=[start_date, end_date]).annotate(year=ExtractYear('booking__create_date')).values('name_tour', 'year').annotate(total_revenue=Sum('booking__total_price')).order_by('total_revenue')
-                month_revenue = Tours.objects.filter(booking__active=True,
-                                                      booking__create_date__range=[start_date, end_date]).annotate(
-                    month=ExtractMonth('booking__create_date')).values('name_tour', 'month').annotate(
-                    total_revenue=Sum('booking__total_price')).order_by('total_revenue')
+                # month_revenue = Tours.objects.filter(booking__active=True,booking__create_date__range=[start_date, end_date]).annotate(
+                #     month=ExtractMonth('booking__create_date')).values('name_tour', 'month').annotate(
+                #     total_revenue=Sum('booking__total_price')).order_by('total_revenue')
         else:
             form = self.MyCustomForm()
 
@@ -60,7 +59,7 @@ class AdminSite(admin.AdminSite):
             # 'b': b,
             'form': form,
             'yearly_revenue':yearly_revenue,
-            'month_revenue':month_revenue
+            # 'month_revenue':month_revenue
         })
 
 
